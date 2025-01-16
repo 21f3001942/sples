@@ -21,7 +21,7 @@ class handler(BaseHTTPRequestHandler):
         query_params = parse_qs(parsed_path.query)
 
         try:
-            if path=="/":
+            if path=="/api":
 
                 param_names = query_params.get('name',[])
             
