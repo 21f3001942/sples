@@ -20,29 +20,19 @@ class handler(BaseHTTPRequestHandler):
         path = parsed_path.path
         query_params = parse_qs(parsed_path.query)
 
-        try:
-            if path=="/api":
 
-                param_names = query_params.get('name',[])
+        param_names = query_params.get('name',[])
             
-                with open('q-vercel-python.json') as f:
-                    data = json.load(f)
+        with open('q-vercel-python.json') as f:
+            data = json.load(f)
 
             
-                result = list(filter(lambda x:x['name']==param_names[0] or x['name']==param_names[1],data))
-                r = {"marks":[]}
+        result = list(filter(lambda x:x['name']==param_names[0] or x['name']==param_names[1],data))
+        r = {"marks":[]}
 
-                r['marks'].append(result[0]['marks'])
-                r['marks'].append(result[1]['marks'])
+        r['marks'].append(result[0]['marks'])
+        r['marks'].append(result[1]['marks'])
 
-                self._send_json_response(r)
-                
-
-            else:
-                self.send_response(200)
-                self.send_header('Content-type','text/plain')
-                self.end_headers()
-                self.wfile.write('Hello, world!'.encode('utf-8'))
-        except:
-
-            return
+        self._send_json_response(r)
+        return
+    
