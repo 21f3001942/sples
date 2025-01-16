@@ -17,22 +17,26 @@ class handler(BaseHTTPRequestHandler):
     def do_GET(self):
 
         parsed_path = urlparse(self.path)
-        path = parsed_path.path
+
         query_params = parse_qs(parsed_path.query)
 
 
-        param_names = query_params.get('name',[])
-            
-        with open('q-vercel-python.json') as f:
-            data = json.load(f)
+        if query_params:
+            param_names = query_params.get('name',[])
+                
+            with open('q-vercel-python.json') as f:
+                data = json.load(f)
 
-            
-        result = list(filter(lambda x:x['name']==param_names[0] or x['name']==param_names[1],data))
-        r = {"marks":[]}
+                
+            result = list(filter(lambda x:x['name']==param_names[0] or x['name']==param_names[1],data))
+            r = {"marks":[]}
 
-        r['marks'].append(result[0]['marks'])
-        r['marks'].append(result[1]['marks'])
+            r['marks'].append(result[0]['marks'])
+            r['marks'].append(result[1]['marks'])
 
-        self._send_json_response(r)
+            self._send_json_response(r)
+        else:
+            self._send_json_response('Hello World!')
         return
     
+
