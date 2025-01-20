@@ -7,7 +7,8 @@ class handler(BaseHTTPRequestHandler):
 
     def _set_headers(self,status_code=200, content_type='application/json'):
         self.send_response(status_code)
-        self.send_header('Content-type',content_type)
+        # self.send_header('Content-type',content_type)
+        self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
 
     def _send_json_response(self, data, status_code=200):
@@ -15,7 +16,7 @@ class handler(BaseHTTPRequestHandler):
         self.wfile.write(json.dumps(data).encode('utf-8'))
     
     def do_GET(self):
-
+        
         parsed_path = urlparse(self.path)
 
         query_params = parse_qs(parsed_path.query)
