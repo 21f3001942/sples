@@ -1,13 +1,13 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 from urllib.parse import urlparse, parse_qs
+from collections import OrderedDict
 
 
 class handler(BaseHTTPRequestHandler):
 
     def _set_headers(self,status_code=200, content_type='application/json'):
         self.send_response(status_code)
-        # self.send_header('Content-type',content_type)
         self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
 
@@ -19,7 +19,7 @@ class handler(BaseHTTPRequestHandler):
         
         parsed_path = urlparse(self.path)
 
-        query_params = parse_qs(parsed_path.query)
+        query_params = OrderedDict(sorted(parse_qs(parsed_path.query).items()))
 
         
         if query_params:
