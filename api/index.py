@@ -21,10 +21,10 @@ class handler(BaseHTTPRequestHandler):
 
         query_params = parse_qs(parsed_path.query)
 
-
+        
         if query_params:
             param_names = query_params.get('name',[])
-                
+            param_names.sort()
             with open('q-vercel-python.json') as f:
                 data = json.load(f)
 
