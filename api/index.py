@@ -28,11 +28,14 @@ class handler(BaseHTTPRequestHandler):
                 data = json.load(f)
 
                 
-            result = list(filter(lambda x:x['name']==param_names[0] or x['name']==param_names[1],data))
+            result = list(filter(lambda x:x['name'] in param_names,data))
             r = {"marks":[]}
 
-            r['marks'].append(result[0]['marks'])
-            r['marks'].append(result[1]['marks'])
+            # r['marks'].append(result[0]['marks'])
+            # r['marks'].append(result[1]['marks'])
+
+            for i in range(len(result)):
+                r['marks'].append(result[i]['marks'])
 
             self._send_json_response(r)
         else:
